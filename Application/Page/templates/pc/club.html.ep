@@ -1,1 +1,31 @@
 % layout 'default_pc';
+
+% for my $club_data (@{$club_data}) {
+
+% if( $paging->{count} % 3 == 0 ){
+	<div class="row"> <!-- row start -->
+% }
+
+	<div class="col-sm4 col-md-4">
+	<div class="body_white">
+
+		<!-- image -->
+		<div class="alpha">
+			<a href=<%= $club_data->{url} %>><img src=<%= $club_data->{image} %> alt=<%= $club_data->{club_name} %> width="250" height="200" class="img-respongive"></a>
+		</div>
+
+		<div class="caption">
+			<!-- title,genre,time -->
+			<h3><strong><%= link_to $club_data->{url} => begin %><%= $club_data->{club_name} %><% end %><br></strong></h3>
+		</div>
+
+	</div>
+	</div>
+% $paging->{count}++;
+
+% if( $paging->{count} % 3 == 0 || $paging->{count} == $paging->{data_num_per_page} ){
+	</div> <!-- row end -->
+	<br>
+% }
+
+% }

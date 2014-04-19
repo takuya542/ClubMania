@@ -13,7 +13,7 @@ my $return;
 $return = Model::EventData->insert(+{
         event_name    => "boom boom boobs",
         detail        => "festa for all who need boobs",
-        image         => "http://cdn.mkimg.carview.co.jp/minkara/photo/000/002/409/989/2409989/p1.jpg?ct=b32c052a9855",
+        image         => "test.link",
         link          => "http://cdn.mkimg.carview.co.jp/minkara/photo/000/002/409/989/2409989/p1.jpg?ct=b32c052a9855",
         genre         => "party",
         social_link   => "facebook.com",
@@ -28,7 +28,7 @@ $return = Model::EventData->insert(+{
 $return = Model::EventData->insert(+{
         event_name    => "great butt night",
         detail        => "festa for all who need great butt",
-        image         => "http://cdn.mkimg.carview.co.jp/minkara/photo/000/002/409/989/2409989/p1.jpg?ct=b32c052a9855",
+        image         => "test.link",
         link          => "http://cdn.mkimg.carview.co.jp/minkara/photo/000/002/409/989/2409989/p1.jpg?ct=b32c052a9855",
         genre         => "party",
         social_link   => "facebook.com",

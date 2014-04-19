@@ -7,6 +7,11 @@ use Data::Dumper;
 use lib '../';
 
 use Logic::EventData;
+use Logic::ClubData;
+use Logic::OwnerData;
+use Logic::LocationData;
+use Logic::UserData;
+use Logic::CouponData;
 use Logic::Paging;
 
 
@@ -58,7 +63,9 @@ get 'club/:page' => { page => undef  } => sub{
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
-    $self->stash(+{ paging => $paging });
+    my $club_data  = Logic::ClubData->new($paging)->get_multi_club_data;
+    $self->app->log->debug("club_list:".Dumper($club_data));
+    $self->stash($club_data);
     ( $paging->is_sp ) ? $self->render('sp/club') : $self->render('pc/club')
 };
 
@@ -70,7 +77,8 @@ get 'club/detail/:id' => sub{
         request => $self->req, 
         param   => $self->param('id'),
     });
-    $self->stash(+{ paging => $paging });
+    my $club_data = Logic::ClubData->new($paging)->get_single_club_data;
+    $self->stash($club_data);
     ( $paging->is_sp ) ? $self->render('sp/club_detail') : $self->render('pc/club_detail')
 };
 
