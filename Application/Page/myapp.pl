@@ -17,6 +17,7 @@ get '/:page' => { page => undef } => sub {
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
+    $self->app->log->debug(Dumper($self->req));
     my $event_data = Logic::EventData->new($paging)->get_multi_event_data;
     $self->stash($event_data);
     ( $paging->is_sp ) ? $self->render('sp/index') : $self->render('pc/index')
