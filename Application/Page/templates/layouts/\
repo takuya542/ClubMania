@@ -1,0 +1,89 @@
+<head>
+
+	<title>ClubMania</title>
+
+    <meta charset="utf-8">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js"></script>
+
+	<!-- ホーム画面追加表示用 -->
+	<script type="text/javascript" src="js/bookmark_bubble/bookmark_bubble.js"></script>
+	<script type="text/javascript" src="js/bookmark_bubble/example.js"></script>
+
+    <%= stylesheet '/css/bootstrap-smart.css'; %>
+    <%= stylesheet '/css/bootstrap-smart-theme.css'; %>
+    <%= stylesheet '/css/smart.css'; %>
+    <%= stylesheet '/css/glider-smart.css'; %>
+    <%= javascript '/js/bootstrap.js'; %>
+    <%= javascript '/js/glider.js'; %>
+    <%= javascript '/js/effects.js'; %>
+    <%= javascript '/js/prototype.js'; %>
+
+</head>
+<body>
+
+    <div class="container text-left">
+		<div class="page-header">
+			<h1><a href="/">ClubMania</a></h1>
+			<p>for those who seeks great night</p>
+		</div>
+	</div>
+
+	<!-- header -->
+	<div class="navbar navbar-default">
+    <div class="container text-left">
+
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/">Home</a></li>
+				<li><a href="/event/1">Event</a></li>
+				<li><a href="/club/1">Club</a></li>
+				<li><a href="/owner/1">DJ</a></li>
+				<li><a href="/coupon/1">Coupon</a></li>
+				<li><a href="/coupon/1">Map</a></li>
+			</ul>
+		</div>
+
+	</div>
+	</div>
+
+    <div class="container text-left">
+		<%= content %>
+    </div> <!--container end -->
+
+
+	<!-- paging -->
+		<ul class="pagination">
+			<a href=<%= $paging->{previous_url} %>>
+				<button type="button" class="btn btn-default btn-large">previous</button>
+			</a>
+			<a href=<%= $paging->{next_url} %>>
+				<button type="button" class="btn btn-default btn-large">next</button>
+			</a>
+		</ul>
+	<!-- paging end -->
+
+	<!-- フッター -->
+	<div class="navbar navbar-default">
+    <div class="container text-left">
+
+		<div class="navbar-header">
+			<!--<a class="navbar-brand" href="/">Home</a>-->
+		</div>
+
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<!-- <li><a href="/contact">Contact us</a></li> -->
+			</ul>
+			<ul class="nav navbar-nav pull-right">
+				<li><a href="/">Copyright 2013 ClubMania All Right Reserved</a></li>
+			</ul>
+		</div>
+
+	</div>
+	</div>
+	<!-- フッター終わり -->
+
+</body>
+</html>

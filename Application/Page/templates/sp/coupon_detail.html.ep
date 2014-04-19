@@ -1,0 +1,20 @@
+% layout 'default';
+
+<h1>coupon_detail.html</h1>
+
+<li><%= link_to '/' => begin %>トップ<% end %></li>
+
+<li><%= link_to '/event'   => begin %>イベント一覧ページ<% end %></li>
+<li><%= link_to '/event/1' => begin %>イベント詳細ページ<% end %></li>
+
+<li><%= link_to '/club'   => begin %>クラブ一覧ページ<% end %></li>
+<li><%= link_to '/club/1' => begin %>クラブ詳細ページ<% end %></li>
+
+<li><%= link_to '/coupon'   => begin %>クーポン一覧ページ<% end %></li>
+<li><%= link_to '/coupon/1' => begin %>クーポン詳細ページ<% end %></li>
+
+<li><%= link_to '/owner'   => begin %>主催者一覧ページ<% end %></li>
+<li><%= link_to '/owner/1' => begin %>主催者詳細ページ<% end %></li>
+
+<li><%= link_to '/locaiton'   => begin %>地域一覧ページ<% end %></li>
+<li><%= link_to '/locaiton/1' => begin %>地域詳細ページ<% end %></li>

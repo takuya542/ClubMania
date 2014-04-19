@@ -1,0 +1,100 @@
+.belt{
+	width: 100%;
+	margin: 15px 0;
+	padding: 5px 0;
+	text-align: center;
+	font-size: 30px;
+	color: white;
+	background-color: black;
+}
+
+.box{
+	overflow: hidden;
+}
+
+
+.image-area{
+	width: 40%;
+	float: left;
+	margin: 0 0 0 0;
+	padding: 0 0 0 20;
+}
+
+.info-area{
+	width: 60%;
+	float: left;
+	margin: 0 0 0 0;
+	padding: 0 15 0 5;
+}
+
+.info-title{
+	font-size: 15px;
+	margin-bottom: 10;
+}
+
+.info-others{
+	font-size: 13px;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+
+
+.title-detail{
+	margin:20px 20px;
+}
+
+.info-detail{
+	margin:20px 20px;
+	font-size: 20px;
+}
+
+.info-detail-genre{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	font-size: 15px;
+	text-align: center;
+}
+
+.info-detail-genre-belt{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	font-size: 20px;
+	text-align: center;
+}
+
+.info-detail-tag{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	font-size: 15px;
+	text-align: center;
+	line-height: 5;
+}
+
+.info-detail-tag-belt{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	font-size: 20px;
+	text-align: center;
+}
+
+.movie-detail{
+	margin:20px 20px;
+}
+
+.make-it-center{
+	width: 100%;
+}
+
+
+.favorite{
+	margin: 15 0 0 0;
+	padding: 0 0 0 0;
+	text-align: center;
+}
+
+.favorite-comment{
+	margin: 0 0 0 0;
+	padding: 15 0 0 0;
+	font-size: 12px;
+	text-align: center;
+}

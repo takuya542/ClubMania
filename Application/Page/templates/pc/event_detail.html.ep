@@ -1,0 +1,45 @@
+% layout 'default_pc';
+
+Event detail<br>
+<div class="title-detail">
+	<h1><strong>
+		<%= $event_data->{event_name}  %>
+		<p><%= $event_data->{detail}  %></p>
+
+		<a href="/">
+			<button type="button" class="btn btn-default btn-large">Get Coupon</button>
+		</a><br>
+
+	</strong></h1>
+</div>
+<br><hr><hr>
+
+
+Club detail<br>
+<div class="title-detail">
+	<h1><strong>
+		<%= $club_data->{club_name}  %>
+		<p><%= $club_data->{detail}  %></p>
+	</strong></h1>
+</div>
+<br><hr><hr>
+
+
+DJ detail<br>
+<div class="title-detail">
+	<h1><strong>
+		<%= $owner_data->{owner_name}  %>
+		<p><%= $owner_data->{detail}  %></p>
+	</strong></h1>
+</div>
+<br><hr><hr>
+
+
+Location detail<br>
+<div class="title-detail">
+	<h1><strong>
+		<%= $location_data->{location_name}  %>
+		<p><%= $location_data->{detail}  %></p>
+	</strong></h1>
+</div>
+<br><hr><hr>

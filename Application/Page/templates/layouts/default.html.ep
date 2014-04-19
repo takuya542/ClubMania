@@ -1,0 +1,29 @@
+<head>
+
+	<title>ClubMania</title>
+
+    <meta charset="utf-8">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js"></script>
+
+	<!-- ホーム画面追加表示用 -->
+	<script type="text/javascript" src="js/bookmark_bubble/bookmark_bubble.js"></script>
+	<script type="text/javascript" src="js/bookmark_bubble/example.js"></script>
+
+    <%= stylesheet '/css/bootstrap-smart.css'; %>
+    <%= stylesheet '/css/bootstrap-smart-theme.css'; %>
+    <%= stylesheet '/css/smart.css'; %>
+    <%= stylesheet '/css/glider-smart.css'; %>
+    <%= javascript '/js/bootstrap.js'; %>
+    <%= javascript '/js/glider.js'; %>
+    <%= javascript '/js/effects.js'; %>
+    <%= javascript '/js/prototype.js'; %>
+
+</head>
+<body>
+
+<%= content %>
+
+</body>
+</html>

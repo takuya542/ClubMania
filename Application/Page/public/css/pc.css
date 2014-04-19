@@ -1,0 +1,26 @@
+.alpha a:hover img{
+opacity: 0.7;
+filter: alpha(opacity=70);
+-ms-filter: "alpha(opacity=70)";
+}
+
+
+.genre{
+	margin:-15px 0px -15px 0px;
+	font-size:17px;
+}
+
+.actress{
+	margin:-15px 0px -15px 0px;
+	font-size:17px;
+}
+
+.body_smoke{
+	background-color:whitesmoke;
+}
+
+.body_white{
+	background-color:white;
+}
+
+
