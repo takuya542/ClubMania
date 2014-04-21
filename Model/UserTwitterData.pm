@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base qw(Class::Accessor::Fast Class::Data::Inheritable);
 
-use lib '/home/onda/ClubMania';
+use lib '../';
 use base 'Model::Base';
 
 __PACKAGE__->mk_accessors( @{columns()} );
@@ -30,9 +30,9 @@ sub new {
         user_id          => $args->{user_id},
         screen_id   => $args->{user_social_id}   || undef,
         screen_name => $args->{user_social_name} || undef,
-        profile          => $args->{detail}           || undef,
-        image            => $args->{image}            || undef,
-        reg_date         => $args->{reg_date}         || undef,
+        profile          => $args->{detail}      || undef,
+        image            => $args->{image}       || undef,
+        reg_date         => $args->{reg_date}    || undef,
     });-
     $self;
 }

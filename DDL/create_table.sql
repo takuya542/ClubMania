@@ -19,8 +19,9 @@ create table event_data(
   owner_id      int           unsigned not null,
   club_id       int           unsigned not null,
   location_id   int           unsigned not null,
-  is_power_push int           unsigned not null,
   start_date    int           unsigned not null,
+  end_date      int           unsigned not null,
+  is_powerpush  int           unsigned not null,
   reg_date      int           unsigned not null
 ) type=InnoDB;
 
@@ -61,8 +62,7 @@ create table event_user_rel(
 
 alter table event_user_rel
  add primary key      (event_id,user_id),
- add         index i1 (event_id),
- add         index i2 (user_id);
+ add         index i1 (user_id);
 
 
 # ---------------------------------------
@@ -97,7 +97,8 @@ create table user_data(
 
 alter table user_data
  add primary key      (user_id),
- add         index i1 (user_name);
+ add         index i1 (user_name),
+ add         index i2 (reg_date);
 
 
 # ---------------------------------------
@@ -108,17 +109,17 @@ create table coupon_data(
   coupon_name     varchar(1000)          not null,
   detail          varchar(1000)          not null,
   image           varchar(255)           not null,
-  link            varchar(255)           not null,
-  genre           varchar(255)           not null,
-  max_distribute  int           unsigned not null,
-  expire          int           unsigned not null,
   event_id        int           unsigned not null,
+  max_distribute  int           unsigned not null,
+  start_date      int           unsigned not null,
+  expire_date     int           unsigned not null,
   reg_date        int           unsigned not null
 ) type=InnoDB;
 
 alter table coupon_data
  add primary key      (coupon_id),
- add         index i1 (genre);
+ add         index i1 (event_id),
+ add         index i2 (start_date);
 
 # ---------------------------------------
 # 地域情報
@@ -127,7 +128,8 @@ create table location_data(
   location_id       int         unsigned not null,
   location_name   varchar(255)           not null,
   detail          varchar(1000)          not null,
-  image           varchar(255)           not null
+  image           varchar(255)           not null,
+  reg_date        int           unsigned not null
 ) type=InnoDB;
 
 alter table location_data
@@ -142,7 +144,8 @@ create table user_pref(
   user_id       int         unsigned not null,
   club_id       int         unsigned not null,
   location_id   int         unsigned not null,
-  genre         varchar(255)         not null
+  genre         varchar(255)         not null,
+  updated_at    int         unsigned not null
 ) type=InnoDB;
 
 alter table user_pref
@@ -174,8 +177,9 @@ alter table user_twitter_data
 # クーポン付与件数管理
 
 create table coupon_count(
-  coupon_id       int           unsigned not null,
-  distributed_num int           unsigned not null
+  coupon_id       int         unsigned not null,
+  distributed_num int         unsigned not null,
+  updated_at      int         unsigned not null
 ) type=InnoDB;
 
 
@@ -188,13 +192,14 @@ alter table coupon_count
 
 create table location_club_rel(
   location_id   int           unsigned not null,
-  club_id       int           unsigned not null
+  club_id       int           unsigned not null,
+  reg_date      int           unsigned not null
 ) type=InnoDB;
 
 
 alter table location_club_rel
- add         index i1 (location_id),
- add         index i2 (club_id);
+ add primary key      (location_id,club_id),
+ add         index i1 (club_id);
 
 
 # ---------------------------------------
@@ -210,7 +215,7 @@ create table club_data(
   max_popularity  int           unsigned not null,
   open_time       varchar(255)           not null,
   close_time      varchar(255)           not null,
-  entrance_price  varchar(255)           not null,
+  entrance_price  int                    not null,
   reg_date        int           unsigned not null
 ) type=InnoDB;
 

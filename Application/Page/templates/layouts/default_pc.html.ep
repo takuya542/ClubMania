@@ -42,6 +42,7 @@
 				<li><a href="/owner/1">DJ</a></li>
 				<li><a href="/coupon/1">Coupon</a></li>
 				<li><a href="/location/1">Map</a></li>
+				<li><a href="/login">Login</a></li>
 			</ul>
 		</div>
 

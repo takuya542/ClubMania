@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base qw(Class::Accessor::Fast Class::Data::Inheritable);
 
-use lib '/home/onda/ClubMania';
+use lib '../';
 use base 'Model::Base';
 
 
@@ -20,6 +20,7 @@ __PACKAGE__->index(+{
     pk    => 'user_id',
     uk    => undef,
     i1    => 'user_name',
+    i2    => 'reg_date',
 });
 
 sub columns { [qw/user_id user_name detail image link reg_date /] };

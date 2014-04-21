@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base qw(Class::Accessor::Fast Class::Data::Inheritable);
 
-use lib '/home/onda/ClubMania';
+use lib '../';
 use base 'Model::Base';
 
 __PACKAGE__->mk_accessors( @{columns()} );
@@ -32,7 +32,7 @@ sub new {
         link          => $args->{link}          || undef,
         image         => $args->{image}         || undef,
         social_link   => $args->{social_link}   || undef,
-        reg_date      => $args->{reg_date}      || time(),
+        reg_date      => $args->{reg_date}      || undef,
         url           => "/owner/detail/$args->{owner_id}",
     });
     $self;

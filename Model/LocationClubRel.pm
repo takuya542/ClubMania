@@ -18,17 +18,17 @@ __PACKAGE__->seq_table(undef); # if it isn`t nessesary,set undef
 __PACKAGE__->index(+{
     pk    => ['location_id','club_id'],
     uk    => undef,
-    i1    => 'location_id',
-    i2    => 'club_id',
+    i1    => 'club_id',
 });
 
-sub columns { [ qw/ location_id club_id /] };
+sub columns { [ qw/ location_id club_id reg_date /] };
 
 sub new {
     my ($class, $args) = @_;
     my $self = $class->SUPER::new(+{
         location_id   => $args->{location_id},
         club_id       => $args->{club_id},
+        reg_date      => $args->{reg_date},
     });
     $self;
 }

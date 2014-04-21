@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base qw(Class::Accessor::Fast Class::Data::Inheritable);
 
-use lib '/home/onda/ClubMania';
+use lib '../';
 use base 'Model::Base';
 
 
@@ -24,7 +24,7 @@ __PACKAGE__->index(+{
     i3    => 'genre',
 });
 
-sub columns { [qw/user_id club_id location_id genre /] };
+sub columns { [ qw/ user_id club_id location_id genre updated_at /] };
 
 sub new {
     my ($class, $args) = @_;
@@ -33,6 +33,7 @@ sub new {
         club_id      => $args->{club_id},
         location_id  => $args->{location_id},
         genre        => $args->{genre},
+        updated_at   => $args->{updated_at},
     });
     $self;
 }

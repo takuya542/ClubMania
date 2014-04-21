@@ -229,6 +229,7 @@ sub _get_insert_values {
     return ( $values, $class->_get_index_value($values) ) unless $seq_key;
     my $seq_id = $class->_get_seq_id;
     $values->{$seq_key} = $seq_id;
+    $values->{reg_date} = time();
     return ( $values, $seq_id );
 }
 
@@ -237,9 +238,10 @@ sub _get_insert_values {
 sub _is_enough_valus_for_insert {
     my ( $class, $values ) = @_;
     my $fields = $class->columns || die "no fields set for class $class\n";
-    for my $key (keys %$values){
-        next if ( $key eq $class->seq_key );
-        return unless( grep{ $_ eq $key }@$fields ); 
+
+    for my $key (@$fields){
+        next if ( $key eq $class->seq_key || $key eq "reg_date" );
+        return unless( grep{ $_ eq $key }keys %$values ); 
     }
     return 1;
 }

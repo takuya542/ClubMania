@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base qw(Class::Accessor::Fast Class::Data::Inheritable);
 
-use lib '/home/onda/ClubMania';
+use lib '../';
 use base 'Model::Base';
 
 __PACKAGE__->mk_accessors( @{columns()} );
@@ -21,7 +21,7 @@ __PACKAGE__->index(+{
     i1    => 'location_name',
 });
 
-sub columns { [ qw/ location_id location_name detail image /] };
+sub columns { [ qw/ location_id location_name detail image reg_date /] };
 
 sub new {
     my ($class, $args) = @_;
@@ -30,6 +30,7 @@ sub new {
         location_name    => $args->{location_name} || undef,
         detail           => $args->{detail}        || undef,
         image            => $args->{image}         || undef,
+        reg_date         => $args->{reg_date}      || undef,
         url              => "/location/detail/$args->{location_id}",
     });
     $self;

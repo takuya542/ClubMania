@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base qw(Class::Accessor::Fast Class::Data::Inheritable);
 
-use lib '/home/onda/ClubMania';
+use lib '../';
 use base 'Model::Base';
 
 __PACKAGE__->mk_accessors( @{columns()} );
@@ -19,10 +19,10 @@ __PACKAGE__->index(+{
     pk    => 'coupon_id',
     uk    => undef,
     i1    => 'event_id',
-    i2    => 'genre',
+    i2    => 'start_date',
 });
 
-sub columns { [ qw/ coupon_id coupon_name detail image genre link max_distribute event_id expire reg_date /] };
+sub columns { [ qw/ coupon_id coupon_name detail image event_id max_distribute start_date expire_date reg_date /] };
 
 sub new {
     my ($class, $args) = @_;
@@ -31,12 +31,11 @@ sub new {
         coupon_name    => $args->{coupon_name}    || undef,
         detail         => $args->{detail}         || undef,
         image          => $args->{image}          || undef,
-        link           => $args->{link}           || undef,
-        genre          => $args->{genre}          || undef,
-        max_distribute => $args->{max_distribute} || undef,
         event_id       => $args->{event_id}       || undef,
-        expire         => $args->{expire}         || undef,
-        reg_date       => $args->{reg_date}       || time(),
+        max_distribute => $args->{max_distribute} || undef,
+        start_date     => $args->{start_date}     || undef,
+        expire_date    => $args->{expire_date}    || undef,
+        reg_date       => $args->{reg_date}       || undef,
         url            => "/coupon/detail/$args->{coupon_id}",
     });
     $self;

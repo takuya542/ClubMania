@@ -4,10 +4,12 @@ use strict;
 use warnings;
 use base qw(Class::Accessor::Fast Class::Data::Inheritable);
 
-use lib '/home/onda/ClubMania';
+use lib '../';
 use base 'Model::Base';
 
-__PACKAGE__->mk_accessors(qw/ event_id user_id coupon_id reg_date /);
+__PACKAGE__->mk_accessors( @{columns()} );
+__PACKAGE__->columns     ( columns() );
+
 __PACKAGE__->db('ClubMania');
 __PACKAGE__->table('user_coupon_rel');
 __PACKAGE__->seq_key(undef);   # if it isn`t nessesary,set undef
@@ -30,7 +32,7 @@ sub new {
         event_id      => $args->{event_id},
         user_id       => $args->{user_id},
         coupon_id     => $args->{coupon_id},
-        reg_date      => $args->{reg_date}      || time(),
+        reg_date      => $args->{reg_date},
     });
     $self;
 }

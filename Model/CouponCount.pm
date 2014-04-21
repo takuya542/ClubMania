@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base qw(Class::Accessor::Fast Class::Data::Inheritable);
 
-use lib '/home/onda/ClubMania';
+use lib '../';
 use base 'Model::Base';
 
 __PACKAGE__->mk_accessors( @{columns()} );
@@ -21,13 +21,14 @@ __PACKAGE__->index(+{
     i1    => undef,
 });
 
-sub columns { [ qw/ coupon_id distributed_num /] };
+sub columns { [ qw/ coupon_id distributed_num updated_at /] };
 
 sub new {
     my ($class, $args) = @_;
     my $self = $class->SUPER::new(+{
         coupon_id       => $args->{coupon_id},
         distributed_num => $args->{distributed_num},
+        updated_at      => $args->{updated_at},
     });
     $self;
 }

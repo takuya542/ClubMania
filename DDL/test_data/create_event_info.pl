@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Data::Dumper;
-use lib '../../../';
+use lib '../../';
 
 use Model::EventData;
 use Model::UserData;
@@ -18,11 +18,11 @@ $return = Model::EventData->insert(+{
         genre         => "party",
         social_link   => "facebook.com",
         owner_id      => 1,
-        location_id   => 1,
         club_id       => 1,
-        is_power_push => 0,
-        start_date    => 2014/04/30,
-        reg_date      => time(),
+        location_id   => 1,
+        start_date    => 10000000,
+        end_date      => 20000000,
+        is_powerpush  => 0,
 });
 
 $return = Model::EventData->insert(+{
@@ -33,9 +33,9 @@ $return = Model::EventData->insert(+{
         genre         => "party",
         social_link   => "facebook.com",
         owner_id      => 1,
-        location_id   => 1,
         club_id       => 1,
-        is_power_push => 0,
-        start_date    => 2014/04/30,
-        reg_date      => time(),
+        location_id   => 1,
+        start_date    => 10000000,
+        end_date      => 20000000,
+        is_powerpush  => 0,
 });

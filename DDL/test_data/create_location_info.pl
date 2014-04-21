@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Data::Dumper;
-use lib '../../../';
+use lib '../../';
 
 use Model::EventData;
 use Model::UserData;

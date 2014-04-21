@@ -1,11 +1,13 @@
 #!/usr/bin/env perl
 use Mojolicious::Lite;
+use Net::Twitter::Lite::WithAPIv1_1;
 
 use Encode;
 use Encode::Guess qw/shift-jis euc-jp/;
 use Data::Dumper;
 use lib '../';
 
+use Config::Const;
 use Logic::EventData;
 use Logic::ClubData;
 use Logic::OwnerData;
@@ -13,6 +15,57 @@ use Logic::LocationData;
 use Logic::UserData;
 use Logic::CouponData;
 use Logic::Paging;
+use Plack::Session;
+
+# twitter認証
+my $config = Config::Const->get_twtter_key;
+my $nt = Net::Twitter::Lite::WithAPIv1_1->new(
+    consumer_key        => $config->{consumer_key},
+    consumer_secret     => $config->{consumer_secret},
+    access_token        => $config->{access_token},
+    access_token_secret => $config->{access_token_secret},
+    ssl                 => 0,
+);
+
+get '/login' => sub {
+    my $self = shift;
+
+    my $session      = Plack::Session->new( $self->req->env );
+    my $redirect_url = $self->param('redirect_url') || '/';
+
+    my $url     = $nt->get_authorization_url(
+        callback => $self->req->url->base . '/callback' 
+    );
+    $session->set( 'redirect_url', $redirect_url );
+    $session->set( 'token', $nt->request_token );
+    $session->set( 'token_secret', $nt->request_token_secret );
+    $self->redirect_to($url);
+};
+
+
+get '/callback' => sub {
+    my $self = shift;
+    my $session = Plack::Session->new( $self->req->env );
+
+    unless ( $self->req->param('denied') ) {
+
+        #request_token取得
+        $nt->request_token( $session->get('token') );
+        $nt->request_token_secret( $session->get('token_secret') );
+
+        my $verifier = $self->req->param('oauth_verifier');
+        my ( $access_token, $access_token_secret, $user_id, $screen_name ) =
+            $nt->request_access_token( verifier => $verifier );
+
+        # セッション発行
+        $session->set( 'access_token',        $access_token );
+        $session->set( 'access_token_secret', $access_token_secret );
+        $session->set( 'screen_name',         $screen_name );
+
+    }
+    $self->redirect_to( $session->get('redirect_url') );
+};
+
 
 
 # ホーム
