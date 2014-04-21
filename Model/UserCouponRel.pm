@@ -22,9 +22,8 @@ __PACKAGE__->index(+{
     i2    => 'event_id',
     i3    => 'coupon_id',
 });
-__PACKAGE__->columns(
-    [ qw/ user_id event_id coupon_id reg_date /]
-);
+
+sub columns { [ qw/ user_id event_id coupon_id reg_date /] };
 
 sub new {
     my ($class, $args) = @_;
