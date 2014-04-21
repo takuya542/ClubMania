@@ -100,6 +100,18 @@ alter table user_data
  add         index i1 (user_name),
  add         index i2 (reg_date);
 
+# ---------------------------------------
+# ユーザセッション情報
+
+create table user_session(
+  user_id       int           unsigned not null,
+  session_seed  varchar(255)  unsigned not null,
+  reg_date      int           unsigned not null
+) type=InnoDB;
+
+alter table user_session
+ add primary key      (user_id),
+ add         index i1 (session_seed);
 
 # ---------------------------------------
 # クーポン情報
