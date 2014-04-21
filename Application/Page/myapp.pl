@@ -26,24 +26,26 @@ our $nt = Net::Twitter::Lite::WithAPIv1_1->new(
     ssl                 => 1,
 );
 
-get '/login' => sub {
+# ログイン
+get 'login/:redirect_url' => { redirect_url => undef  } => sub{
     my $self = shift;
 
+    #ログイン完了後のリダイレクトページがgetパラメータで与えられている場合は取得=>クッキーセット
+    my $redirect_url = $self->param('redirect_url') || '/',
 
-    #$self->app->log->debug(Dumper($self->session));
-    #$self->app->log->debug( $self->req->url->base.'/callback' );
-    #$self->app->log->debug(Dumper($config));
-    #$self->app->log->debug(Dumper($nt));
-
+    #リクエストトークン取得
     my $url     = $nt->get_authorization_url(
         callback => $self->req->url->base.'/callback'
     );
+
+    #リクエストトークン&ログイン後の遷移先URLをクッキーにセット
     $self->session(expiration => (60 * 60 * 24 * 365 * 30));
     $self->session( 'token'                 =>  $nt->request_token );
     $self->session( 'token_secret'          =>  $nt->request_token_secret );
     $self->session( 'redirect_after_login'  =>  '/' );
+
+    # ログイン画面へユーザをリダイレクトさせる
     $self->redirect_to($url);
-    $self->redirect_to('/');
 };
 
 
@@ -66,6 +68,8 @@ get '/callback' => sub {
         $self->session( 'screen_name'          => $screen_name );
 
     }
+
+    #ログイン前にいたページで戻す
     $self->redirect_to( $self->session('redirect_after_login') );
 };
 
@@ -84,7 +88,7 @@ get '/:page' => { page => undef } => sub {
 };
 
 
-# event一覧ページ
+# event一覧
 get '/event/:page' => { page => undef } => sub{
     my $self = shift;
     my $paging = Logic::Paging->build_paging(+{ 
@@ -97,7 +101,7 @@ get '/event/:page' => { page => undef } => sub{
 };
 
 
-# event詳細ページ
+# event詳細
 get '/event/detail/:id' => sub{
     my $self = shift;
     my $paging = Logic::Paging->build_paging(+{ 
@@ -137,31 +141,28 @@ get 'club/detail/:id' => sub{
 };
 
 
-
-# --------------------------------
-# 以下工事中
-# -------------------------------
-
-
-# クーポン一覧ページ
+# クーポン一覧
 get 'coupon/:page' => { page => undef  } => sub{
     my $self = shift;
     my $paging = Logic::Paging->build_paging(+{ 
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
-    $self->stash(+{ paging => $paging });
+    my $coupon_data = Logic::CouponData->new($paging)->get_multi_coupon_data;
+    $self->stash($coupon_data);
     ( $paging->is_sp ) ? $self->render('sp/coupon') : $self->render('pc/coupon')
 };
 
-# クーポン詳細ページ
+
+# クーポン詳細
 get 'coupon/detail/:id' => sub{
     my $self = shift;
     my $paging = Logic::Paging->build_paging(+{ 
         request => $self->req, 
         param   => $self->param('id'),
     });
-    $self->stash(+{ paging => $paging });
+    my $coupon_data = Logic::CouponData->new($paging)->get_single_coupon_data;
+    $self->stash($coupon_data);
     ( $paging->is_sp ) ? $self->render('sp/coupon_detail') : $self->render('pc/coupon_detail')
 };
 
@@ -173,9 +174,11 @@ get 'location/:page' => { page => undef  } => sub{
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
-    $self->stash(+{ paging => $paging });
+    my $location_data = Logic::LocationData->new($paging)->get_multi_location_data;
+    $self->stash($location_data);
     ( $paging->is_sp ) ? $self->render('sp/location') : $self->render('pc/location')
 };
+
 
 # マップ詳細(六本木とか渋谷とか)
 get 'location/detail/:id' => sub{
@@ -184,20 +187,24 @@ get 'location/detail/:id' => sub{
         request => $self->req, 
         param   => $self->param('id'),
     });
-    $self->stash(+{ paging => $paging });
+    my $location_data = Logic::LocationData->new($paging)->get_sngle_location_data;
+    $self->stash($location_data);
     ( $paging->is_sp ) ? $self->render('sp/location_detail') : $self->render('pc/location_detail')
 };
 
-# 主催者一覧
+
+# 主催者一覧(DJ)
 get 'owner/:page' => { page => undef  } => sub{
     my $self = shift;
     my $paging = Logic::Paging->build_paging(+{ 
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
-    $self->stash(+{ paging => $paging });
+    my $owner_data = Logic::OwnerData->new($paging)->get_multi_owner_data;
+    $self->stash($owner_data);
     ( $paging->is_sp ) ? $self->render('sp/owner') : $self->render('pc/owner')
 };
+
 
 # 主催者詳細
 get 'owner/detail/:id' => sub{
@@ -206,9 +213,11 @@ get 'owner/detail/:id' => sub{
         request => $self->req, 
         param   => $self->param('id'),
     });
-    $self->stash(+{ paging => $paging });
+    my $owner_data = Logic::OwnerData->new($paging)->get_single_owner_data;
+    $self->stash($owner_data);
     ( $paging->is_sp ) ? $self->render('sp/owner_detail') : $self->render('pc/owner_detail')
 };
+
 
 # ユーザ一覧
 get 'user/:page' => { page => undef  } => sub{
@@ -217,9 +226,11 @@ get 'user/:page' => { page => undef  } => sub{
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
-    $self->stash(+{ paging => $paging });
+    my $user_data = Logic::UserData->new($paging)->get_multi_user_data;
+    $self->stash($user_data);
     ( $paging->is_sp ) ? $self->render('sp/user') : $self->render('pc/user')
 };
+
 
 # ユーザ詳細
 get 'user/detail/:id' => sub{
@@ -228,16 +239,9 @@ get 'user/detail/:id' => sub{
         request => $self->req, 
         param   => $self->param('id'),
     });
-    $self->stash(+{ paging => $paging });
+    my $user_data = Logic::UserData->new($paging)->get_single_user_data;
+    $self->stash($user_data);
     ( $paging->is_sp ) ? $self->render('sp/user_detail') : $self->render('pc/user_detail')
 };
-
-#------------------------------
-#以下、リダイレクト処理
-get 'index' => sub {
-    my $self = shift;
-    $self->redirect_to('/');
-};
-
 
 app->start;
