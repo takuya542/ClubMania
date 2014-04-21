@@ -36,10 +36,9 @@ get '/login' => sub {
     my $url     = $nt->get_authorization_url(
         callback => $self->req->url->base . '/callback' 
     );
-    $session->set( 'redirect_url', $redirect_url );
     $session->set( 'token', $nt->request_token );
     $session->set( 'token_secret', $nt->request_token_secret );
-    $self->redirect_to($url);
+    $self->redirect_to('/');
 };
 
 

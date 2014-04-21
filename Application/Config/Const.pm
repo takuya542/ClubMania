@@ -3,10 +3,10 @@ package Config::Const;
 use strict;
 use warnings;
 
-sub CONSUMER_KEY {'O6HuVarYF1SHsRWJcRAOw'}
-sub CONSUMER_SECRET {'sTLMUpLbXzSjQem4AdMETma09APLhZpaFflUa5YG1kk'}
-sub ACCESS_TOKEN {'2303902369-JyO4IhHC0wephm7L3Zhs68tAsrzxUrakA0TWfuI'}
-sub ACCESS_TOKEN_SECRET {'JGyGVMyDR0shqADZcaef6yIfMPdXpaz3I4Wi7c9dCbBRU'}
+sub CONSUMER_KEY    {'DCzHXGtnEuQZM5aVBCoJtBYS3'}
+sub CONSUMER_SECRET {'vcxblDEa4h4IapJRP05LBsBRa7dJOYb0aofFvEaGUl2p17MpTk'}
+sub ACCESS_TOKEN        {'2457619003-BY3zdKpRuHWxNr50ZfSa2RCZJaCeZtdwgTwVgqz'}
+sub ACCESS_TOKEN_SECRET {'dNze0yxuItKZV4SzmIu1q5knkqIXllMERty3FMLQWE39J'}
 
 sub get_twtter_key {
     return +{
