@@ -226,10 +226,10 @@ sub count {
 sub _get_insert_values {
     my ( $class, $values ) = @_;
     my $seq_key = $class->seq_key;
+    $values->{reg_date} = time();
     return ( $values, $class->_get_index_value($values) ) unless $seq_key;
     my $seq_id = $class->_get_seq_id;
     $values->{$seq_key} = $seq_id;
-    $values->{reg_date} = time();
     return ( $values, $seq_id );
 }
 

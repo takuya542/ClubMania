@@ -15,6 +15,8 @@ use Logic::LocationData;
 use Logic::UserData;
 use Logic::CouponData;
 use Logic::Paging;
+use Logic::UserSession;
+
 
 # twitter認証
 our $config = Config::Const->get_twtter_key;
@@ -26,26 +28,23 @@ our $nt = Net::Twitter::Lite::WithAPIv1_1->new(
     ssl                 => 1,
 );
 
+
 # ログイン
-get 'login/:redirect_url' => { redirect_url => undef  } => sub{
+get '/login' => sub{
     my $self = shift;
 
-    #ログイン完了後のリダイレクトページがgetパラメータで与えられている場合は取得=>クッキーセット
-    my $redirect_url = $self->param('redirect_url') || '/',
-
     #リクエストトークン取得
-    my $url     = $nt->get_authorization_url(
+    my $request_url     = $nt->get_authorization_url(
         callback => $self->req->url->base.'/callback'
     );
 
-    #リクエストトークン&ログイン後の遷移先URLをクッキーにセット
-    $self->session(expiration => (60 * 60 * 24 * 365 * 30));
-    $self->session( 'token'                 =>  $nt->request_token );
-    $self->session( 'token_secret'          =>  $nt->request_token_secret );
-    $self->session( 'redirect_after_login'  =>  '/' );
+    #リクエストトークンセット
+    $self->session( expiration => (60 * 60 * 24 * 365 * 30) );
+    $self->session( 'token'                     =>  $nt->request_token );
+    $self->session( 'token_secret'              =>  $nt->request_token_secret );
 
     # ログイン画面へユーザをリダイレクトさせる
-    $self->redirect_to($url);
+    $self->redirect_to($request_url);
 };
 
 
@@ -59,20 +58,63 @@ get '/callback' => sub {
         $nt->request_token_secret( $self->session('token_secret') );
 
         my $verifier = $self->req->param('oauth_verifier');
-        my ( $access_token, $access_token_secret, $user_id, $screen_name ) =
+        my ( $access_token, $access_token_secret, $user_id_twitter, $screen_name ) =
             $nt->request_access_token( verifier => $verifier );
 
+        #consumer_key,consumer_secret,user_idを元にsession_seedを生成=>DB格納
+        my $session_seed = Logic::UserSession->set_and_get_user_session_seed(+{
+            user_id_twitter     => $user_id_twitter,
+            screen_name         => $screen_name,
+            access_token        => $access_token,
+            access_token_secret => $access_token_secret,
+        });
+
         # セッション発行
-        $self->session( 'access_token'         => $access_token );
-        $self->session( 'access_token_secret'  => $access_token_secret );
-        $self->session( 'screen_name'          => $screen_name );
+        $self->session( 'session_seed'         => $session_seed );
 
     }
 
-    #ログイン前にいたページで戻す
-    $self->redirect_to( $self->session('redirect_after_login') );
+    #ログイン前にいたページに戻す
+    $self->redirect_to( $self->session('redirect_url_after_login') || "/");
 };
 
+# ログアウト
+get '/logout' => sub {
+    my $self = shift;
+    $self->session( expire => 1 );
+    $self->redirect_to("/");
+};
+
+under sub {
+    my $self = shift;
+
+    #ユーザ情報を生成
+    my $user_data = Logic::UserSession->build_user_data(+{
+        session_seed => $self->session('session_seed') || undef,
+        self => $self,
+    });
+
+#    $self->app->log->debug("under user_data");
+#    $self->app->log->debug(Dumper($user_data));
+
+    #リクエストURLを取得
+    my $request_url = $self->req->url->path->{path};
+
+    #ログイン必須画面がチェック
+    if ( Logic::UserSession->is_login_nesessary($request_url) ){
+
+        #未ログインならログイン画面へ飛ばす
+        unless ( $user_data->is_login_already ){
+
+            #ログイン後に移動するURLをセッションで保持する
+            $self->session( 'redirect_url_after_login' => $request_url );
+            $self->redirect_to("/login");
+        }
+
+    }
+    app->defaults(+{user_data => $user_data});
+    return 1;
+};
 
 
 # ホーム
@@ -82,8 +124,12 @@ get '/:page' => { page => undef } => sub {
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
+
+#    $self->app->log->debug("url:/ user_data");
+#    $self->app->log->debug(Dumper($self->stash->{user_data}));
     my $event_data = Logic::EventData->new($paging)->get_multi_event_data;
     $self->stash($event_data);
+
     ( $paging->is_sp ) ? $self->render('sp/index') : $self->render('pc/index')
 };
 
@@ -122,7 +168,6 @@ get 'club/:page' => { page => undef  } => sub{
         param   => $self->param('page') || 1,
     });
     my $club_data  = Logic::ClubData->new($paging)->get_multi_club_data;
-    $self->app->log->debug("club_list:".Dumper($club_data));
     $self->stash($club_data);
     ( $paging->is_sp ) ? $self->render('sp/club') : $self->render('pc/club')
 };

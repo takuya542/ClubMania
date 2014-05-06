@@ -13,8 +13,8 @@ __PACKAGE__->columns     ( columns() );
 
 __PACKAGE__->db('ClubMania');
 __PACKAGE__->table('user_data');
-__PACKAGE__->seq_key('user_id');    # if it isn`t nessesary,set undef
-__PACKAGE__->seq_table('seq_user'); # if it isn`t nessesary,set undef
+__PACKAGE__->seq_key(undef);    # if it isn`t nessesary,set undef
+__PACKAGE__->seq_table(undef); # if it isn`t nessesary,set undef
 
 __PACKAGE__->index(+{
     pk    => 'user_id',

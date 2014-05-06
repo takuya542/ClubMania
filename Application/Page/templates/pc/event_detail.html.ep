@@ -18,8 +18,8 @@ Event detail<br>
 Club detail<br>
 <div class="title-detail">
 	<h1><strong>
-		<%= $club_data->{club_name}  %>
-		<p><%= $club_data->{detail}  %></p>
+		<%= $event_data->{club_data}->{club_name}  %>
+		<p><%= $event_data->{club_data}->{detail}  %></p>
 	</strong></h1>
 </div>
 <br><hr><hr>
@@ -28,8 +28,8 @@ Club detail<br>
 DJ detail<br>
 <div class="title-detail">
 	<h1><strong>
-		<%= $owner_data->{owner_name}  %>
-		<p><%= $owner_data->{detail}  %></p>
+		<%= $event_data->{owner_data}->{owner_name}  %>
+		<p><%= $event_data->{owner_data}->{detail}  %></p>
 	</strong></h1>
 </div>
 <br><hr><hr>
@@ -38,8 +38,8 @@ DJ detail<br>
 Location detail<br>
 <div class="title-detail">
 	<h1><strong>
-		<%= $location_data->{location_name}  %>
-		<p><%= $location_data->{detail}  %></p>
+		<%= $event_data->{location_data}->{location_name}  %>
+		<p><%= $event_data->{location_data}->{detail}  %></p>
 	</strong></h1>
 </div>
 <br><hr><hr>

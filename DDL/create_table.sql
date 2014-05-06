@@ -105,7 +105,7 @@ alter table user_data
 
 create table user_session(
   user_id       int           unsigned not null,
-  session_seed  varchar(255)  unsigned not null,
+  session_seed  varchar(255)           not null,
   reg_date      int           unsigned not null
 ) type=InnoDB;
 

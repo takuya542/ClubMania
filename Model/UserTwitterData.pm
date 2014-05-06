@@ -28,9 +28,9 @@ sub new {
     my ($class, $args) = @_;
     my $self = $class->SUPER::new(+{
         user_id          => $args->{user_id},
-        screen_id   => $args->{user_social_id}   || undef,
-        screen_name => $args->{user_social_name} || undef,
-        profile          => $args->{detail}      || undef,
+        screen_id        => $args->{screen_id}   || undef,
+        screen_name      => $args->{screen_name} || undef,
+        profile          => $args->{profile}      || undef,
         image            => $args->{image}       || undef,
         reg_date         => $args->{reg_date}    || undef,
     });-

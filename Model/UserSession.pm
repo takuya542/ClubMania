@@ -12,7 +12,7 @@ __PACKAGE__->mk_accessors( @{columns()} );
 __PACKAGE__->columns     ( columns() );
 
 __PACKAGE__->db('ClubMania');
-__PACKAGE__->table('user_data');
+__PACKAGE__->table('user_session');
 __PACKAGE__->seq_key('user_id');    # if it isn`t nessesary,set undef
 __PACKAGE__->seq_table('seq_user'); # if it isn`t nessesary,set undef
 
