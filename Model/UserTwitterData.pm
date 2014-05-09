@@ -34,7 +34,7 @@ sub new {
         image            => $args->{image}       || undef,
         reg_date         => $args->{reg_date}    || undef,
     });-
-    $self;
+    return $self;
 }
 
 1;

@@ -5,6 +5,7 @@ use strict;
 sub LOGIN_NESESSARY {
     [qw/
     coupon
+    event
     /]
 }
 

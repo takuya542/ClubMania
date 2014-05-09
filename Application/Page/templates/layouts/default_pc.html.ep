@@ -27,6 +27,7 @@
 		<div class="page-header">
 			<h1><a href="/">ClubMania</a></h1>
 			<p>for those who seeks great night</p>
+			<p>hello!<%= $user_data->{user_name} %></p>
 		</div>
 	</div>
 

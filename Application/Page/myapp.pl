@@ -17,6 +17,8 @@ use Logic::CouponData;
 use Logic::Paging;
 use Logic::UserSession;
 
+#ログ吐き方
+#$self->app->log->debug(Dumper($self->stash->{event_data}));
 
 # twitter認証
 our $config = Config::Const->get_twtter_key;
@@ -28,10 +30,26 @@ our $nt = Net::Twitter::Lite::WithAPIv1_1->new(
     ssl                 => 1,
 );
 
+get '/login_before' => sub{
+    my $self = shift;
+    my $ua   = $self->req->headers->user_agent;
+    ( $ua =~/iPhone/ || $ua =~/Android/ ) ? $self->render('sp/login') : $self->render('pc/login');
+};
 
 # ログイン
 get '/login' => sub{
     my $self = shift;
+
+    #ユーザ情報を生成
+    my $user_data = Logic::UserSession->build_user_data(+{
+        session_seed => $self->session('session_seed') || undef,
+    });
+
+	$self->app->log->debug("/login");
+	$self->app->log->debug(Dumper($user_data));
+
+    #既にログイン済みならトップをリダイレクト
+    $self->redirect_to("/") if ( $user_data->is_login_already );
 
     #リクエストトークン取得
     my $request_url     = $nt->get_authorization_url(
@@ -81,7 +99,7 @@ get '/callback' => sub {
 # ログアウト
 get '/logout' => sub {
     my $self = shift;
-    $self->session( expire => 1 );
+    $self->session( expires => 1 );
     $self->redirect_to("/");
 };
 
@@ -94,9 +112,6 @@ under sub {
         self => $self,
     });
 
-#    $self->app->log->debug("under user_data");
-#    $self->app->log->debug(Dumper($user_data));
-
     #リクエストURLを取得
     my $request_url = $self->req->url->path->{path};
 
@@ -108,25 +123,23 @@ under sub {
 
             #ログイン後に移動するURLをセッションで保持する
             $self->session( 'redirect_url_after_login' => $request_url );
-            $self->redirect_to("/login");
+            $self->redirect_to("/login_before");
         }
 
     }
-    app->defaults(+{user_data => $user_data});
+    $self->stash(+{ user_data => $user_data });   #参照 at template：user_data->{user_name};
     return 1;
 };
 
 
 # ホーム
 get '/:page' => { page => undef } => sub {
-    my $self        = shift;
+    my $self   = shift;
     my $paging = Logic::Paging->build_paging(+{ 
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
 
-#    $self->app->log->debug("url:/ user_data");
-#    $self->app->log->debug(Dumper($self->stash->{user_data}));
     my $event_data = Logic::EventData->new($paging)->get_multi_event_data;
     $self->stash($event_data);
 
