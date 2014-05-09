@@ -47,7 +47,7 @@
       <div class="row demo-tiles">
         <div class="col-xs-4">
           <div class="tile tile-hot">
-            <img src="images/icons/png/Gift-Box.png" alt="Compas" class="tile-image big-illustration">
+            <%= image '/images/icons/png/Gift-Box.png', class => 'tile-image big-illustration' %>
             <h3 class="tile-title">Get Coupon</h3><br>
             <a class="btn btn-primary btn-large btn-block" href="/coupon/1">More detail</a>
           </div>
@@ -55,7 +55,7 @@
 
         <div class="col-xs-4">
           <div class="tile">
-            <img src="images/icons/png/Calendar.png" alt="Infinity-Loop" class="tile-image">
+            <%= image '/images/icons/png/Calendar.png', class => 'tile-image' %>
             <h3 class="tile-title">Check Event</h3><br>
             <!-- <p>Vector-based shapes and minimum of layer styles.</p> -->
             <a class="btn btn-primary btn-large btn-block" href="/event/1">More detail</a>
@@ -64,7 +64,7 @@
 
         <div class="col-xs-4">
           <div class="tile tile-hot">
-            <img src="images/icons/png/Map.png" alt="Chat" class="tile-image">
+            <%= image '/images/icons/png/Map.png', class => 'tile-image' %>
             <h3 class="tile-title">Seek club</h3><br>
             <a class="btn btn-primary btn-large btn-block" href="/club/1">More detail</a>
           </div>
