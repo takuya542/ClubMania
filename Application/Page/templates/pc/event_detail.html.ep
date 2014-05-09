@@ -6,7 +6,7 @@ Event detail<br>
 		<%= $event_data->{event_name}  %>
 		<p><%= $event_data->{detail}  %></p>
 
-		<a href="/">
+		<a href="/coupon/1">
 			<button type="button" class="btn btn-default btn-large">Get Coupon</button>
 		</a><br>
 

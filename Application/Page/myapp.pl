@@ -16,6 +16,10 @@ use Logic::UserData;
 use Logic::CouponData;
 use Logic::Paging;
 use Logic::UserSession;
+use Logic::Authorized;
+
+use lib '/home/onda/dotfiles';
+use Utility::Common;
 
 #ログ吐き方
 #$self->app->log->debug(Dumper($self->stash->{event_data}));
@@ -29,6 +33,17 @@ our $nt = Net::Twitter::Lite::WithAPIv1_1->new(
     access_token_secret => $config->{access_token_secret},
     ssl                 => 1,
 );
+
+get '/auth/form' => sub{
+    my $self = shift;
+    $self->render('auth/form');
+};
+
+post '/auth/exec' => sub{
+    my $self = shift;
+    Logic::Authorized->insert($self);
+    $self->redirect_to("/");
+};
 
 # ログイン訴求ページ
 get '/login_before' => sub{
@@ -91,10 +106,13 @@ get '/callback' => sub {
         # セッション発行
         $self->session( 'session_seed'         => $session_seed );
 
-    }
+        #ログイン前にいたページに戻す
+        $self->redirect_to( $self->session('redirect_url_after_login') || "/");
 
-    #ログイン前にいたページに戻す
-    $self->redirect_to( $self->session('redirect_url_after_login') || "/");
+        return;
+    }
+    $self->redirect_to("/");
+    return 1;
 };
 
 # ログアウト
@@ -124,6 +142,7 @@ under sub {
             #ログイン後に移動するURLをセッションで保持する
             $self->session( 'redirect_url_after_login' => $request_url );
             $self->redirect_to("/login_before");
+            return;
         }
 
     }
@@ -206,9 +225,10 @@ get 'coupon/:page' => { page => undef  } => sub{
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
-    my $coupon_data = Logic::CouponData->new($paging)->get_multi_coupon_data;
-    $self->stash($coupon_data);
-    ( $paging->is_sp ) ? $self->render('sp/coupon') : $self->render('pc/coupon')
+    #my $coupon_data = Logic::CouponData->new($paging)->get_multi_coupon_data;
+    #$self->stash($coupon_data);
+    #( $paging->is_sp ) ? $self->render('sp/coupon') : $self->render('pc/coupon')
+    $self->redirect_to("/");
 };
 
 
@@ -219,9 +239,10 @@ get 'coupon/detail/:id' => sub{
         request => $self->req, 
         param   => $self->param('id'),
     });
-    my $coupon_data = Logic::CouponData->new($paging)->get_single_coupon_data;
-    $self->stash($coupon_data);
-    ( $paging->is_sp ) ? $self->render('sp/coupon_detail') : $self->render('pc/coupon_detail')
+    #my $coupon_data = Logic::CouponData->new($paging)->get_single_coupon_data;
+    #$self->stash($coupon_data);
+    #( $paging->is_sp ) ? $self->render('sp/coupon_detail') : $self->render('pc/coupon_detail')
+    $self->redirect_to("/");
 };
 
 

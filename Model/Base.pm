@@ -17,6 +17,9 @@ use Carp;
 use Data::Dumper;
 use parent qw(Class::Accessor::Fast Class::Data::Inheritable);
 
+use lib '/home/onda/dotfiles';
+use Utility::Common;
+
 __PACKAGE__->mk_classdata('db');
 __PACKAGE__->mk_classdata('table');
 __PACKAGE__->mk_classdata('seq_key');
@@ -112,6 +115,7 @@ sub search {
 
 sub insert {
     my ($class,$values) = @_;
+	Utility::Common::dump("insert",$values);
     die "fieldvals are not given" unless ($values);
     die "fieldvals are invalid  " unless ( $class->_is_value_valid($values) );
     die "insert values are not fully set " unless ( $class->_is_enough_valus_for_insert($values) );

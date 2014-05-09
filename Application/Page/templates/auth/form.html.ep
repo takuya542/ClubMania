@@ -1,0 +1,52 @@
+<h1>event_data</h1>
+<form action="/auth/exec" method="post">
+
+event_name      <textarea rows="4" cols="50" name= "event_name"></textarea><br>
+detail          <textarea rows="4" cols="50" name= "detail"></textarea><br>
+image           <textarea rows="4" cols="50" name= "image"></textarea><br>
+link            <textarea rows="4" cols="50" name= "link"></textarea><br>
+genre           <textarea rows="4" cols="50" name= "genre"></textarea><br>
+social_link     <textarea rows="4" cols="50" name= "social_link"></textarea><br>
+owner_id        <textarea rows="4" cols="50" name= "owner_id"></textarea><br>
+club_id         <textarea rows="4" cols="50" name= "club_id"></textarea><br>
+location_id     <textarea rows="4" cols="50" name= "location_id"></textarea><br>
+start_date      <textarea rows="4" cols="50" name= "start_date"></textarea><br>
+end_date        <textarea rows="4" cols="50" name= "end_date"></textarea><br>
+is_powerpush    <textarea rows="4" cols="50" name= "is_powerpush"></textarea><br>
+
+                <input type="hidden"   name= "type" value="event_data">
+<input type="submit" value="submit">
+</form>
+
+
+
+
+<h1>club_data</h1>
+<form action="/auth/exec" method="post">
+
+club_name       <textarea rows="4" cols="50" name= "club_name"></textarea><br>
+detail          <textarea rows="4" cols="50" name= "detail"></textarea><br>
+link            <textarea rows="4" cols="50" name= "link"></textarea><br>
+image           <textarea rows="4" cols="50" name= "image"></textarea><br>
+genre           <textarea rows="4" cols="50" name= "genre"></textarea><br>
+max_popularity  <textarea rows="4" cols="50" name= "max_popularity"></textarea><br>
+open_time       <textarea rows="4" cols="50" name= "open_time"></textarea><br>
+close_time      <textarea rows="4" cols="50" name= "close_time"></textarea><br>
+entrance_price  <textarea rows="4" cols="50" name= "entrance_price"></textarea><br>
+
+                <input type="hidden"   name= "type" value="club_data">
+<input type="submit" value="submit">
+</form>
+
+
+
+
+<h1>location_data</h1>
+<form action="/auth/exec" method="post">
+
+location_name   <textarea rows="4" cols="50" name= "club_name"></textarea><br>
+detail          <textarea rows="4" cols="50" name= "detail"></textarea><br>
+image           <textarea rows="4" cols="50" name= "image"></textarea><br>
+                <input type="hidden"   name= "type" value="location_data">
+<input type="submit" value="submit">
+</form>
