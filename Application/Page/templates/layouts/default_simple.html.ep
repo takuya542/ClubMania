@@ -1,0 +1,67 @@
+<head>
+
+	<title>ClubMania</title>
+
+    <meta charset="utf-8">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js"></script>
+
+	<!-- ホーム画面追加表示用 -->
+	<script type="text/javascript" src="js/bookmark_bubble/bookmark_bubble.js"></script>
+	<script type="text/javascript" src="js/bookmark_bubble/example.js"></script>
+
+	<!--  stylesheet -->
+    <%= stylesheet '/css/bootstrap.css'; %>
+    <%= stylesheet '/css/demo.css'; %>
+    <%= stylesheet '/css/flat-ui.css'; %>
+	
+	<!--  javascript -->
+    <%= javascript '/js/bootstrap.js'; %>
+    <%= javascript '/js/bootstrap-select.js'; %>
+    <%= javascript '/js/bootstrap-switch.js'; %>
+    <%= javascript '/js/flatui-checkbox.js'; %>
+    <%= javascript '/js/flatui-radio.js'; %>
+    <%= javascript '/js/jquery-1.8.3.min.js'; %>
+    <%= javascript '/js/jquery-ui-1.10.3.custom.min.js'; %>
+    <%= javascript '/js/jquery.ui.touch-punch.min.js'; %>
+    <%= javascript '/js/jquery.tagsinput.js'; %>
+    <%= javascript '/js/jquery.placeholder.js'; %>
+    <%= javascript '/js/jquery.stacktable.js'; %>
+    <%= javascript '/js/effects.js'; %>
+    <%= javascript '/js/prototype.js'; %>
+
+</head>
+<body>
+    <div class="container">
+
+        <%= content %>
+
+    </div> <!-- /Contaienr -->
+
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-7">
+
+            <h3 class="footer-title">ClubMania</h3>
+            <p>All right reserves</p>
+
+          </div> <!-- /col-xs-7 -->
+
+          <div class="col-xs-5">
+            <div class="footer-banner">
+              <h3 class="footer-title">Have Fun!</h3>
+              <ul>
+                <li>Coutact us via email below</li>
+                <li>clubmania.information@gmail.com</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+</body>
+</html>

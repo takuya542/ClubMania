@@ -1,2 +1,16 @@
-<h1>you need to login to visit this pagte</h1>
-<li><a href="/login">go to login page</a></li>
+% layout 'default_simple';
+
+<br><br>
+<div class="login">
+    <div class="login-screen">
+
+        <div class="login-icon">
+            <%= image '/images/icons/svg/chat.svg' %>
+            <h4>Join to <small>ClubMani</small></h4>
+        </div>
+
+        <div class="login-form">
+            <a class="btn btn-primary btn-lg btn-block" href="/login">LogIn by Twitter Account</a>
+        </div>
+    </div>
+</div>
