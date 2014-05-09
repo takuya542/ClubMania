@@ -115,7 +115,6 @@ sub search {
 
 sub insert {
     my ($class,$values) = @_;
-	Utility::Common::dump("insert",$values);
     die "fieldvals are not given" unless ($values);
     die "fieldvals are invalid  " unless ( $class->_is_value_valid($values) );
     die "insert values are not fully set " unless ( $class->_is_enough_valus_for_insert($values) );
