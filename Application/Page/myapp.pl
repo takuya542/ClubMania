@@ -30,6 +30,7 @@ our $nt = Net::Twitter::Lite::WithAPIv1_1->new(
     ssl                 => 1,
 );
 
+# ログイン訴求ページ
 get '/login_before' => sub{
     my $self = shift;
     my $ua   = $self->req->headers->user_agent;
@@ -45,11 +46,11 @@ get '/login' => sub{
         session_seed => $self->session('session_seed') || undef,
     });
 
-	$self->app->log->debug("/login");
-	$self->app->log->debug(Dumper($user_data));
-
-    #既にログイン済みならトップをリダイレクト
-    $self->redirect_to("/") if ( $user_data->is_login_already );
+    #既にログイン済みならトップにリダイレクト
+    if ( $user_data->is_login_already ){
+        $self->redirect_to("/");
+        return;
+    }
 
     #リクエストトークン取得
     my $request_url     = $nt->get_authorization_url(
@@ -109,7 +110,6 @@ under sub {
     #ユーザ情報を生成
     my $user_data = Logic::UserSession->build_user_data(+{
         session_seed => $self->session('session_seed') || undef,
-        self => $self,
     });
 
     #リクエストURLを取得
@@ -129,15 +129,6 @@ under sub {
     }
     $self->stash(+{ user_data => $user_data });   #参照 at template：user_data->{user_name};
     return 1;
-};
-
-get '/landing' => sub {
-    my $self = shift;
-    my $paging = Logic::Paging->build_paging(+{ 
-        request => $self->req, 
-        param   => undef, 
-    });
-    ( $paging->is_sp ) ? $self->render('sp/landing') : $self->render('pc/landing')
 };
 
 
