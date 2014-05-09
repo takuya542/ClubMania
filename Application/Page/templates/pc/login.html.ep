@@ -10,7 +10,10 @@
         </div>
 
         <div class="login-form">
-            <a class="btn btn-primary btn-lg btn-block" href="/login">LogIn by Twitter Account</a>
+            <a class="btn btn-primary btn-lg btn-block" href="/login">Login by Twitter Account</a>
         </div>
+
+        <h3>You need to Login<br> to get coupon</h3>
+
     </div>
 </div>
