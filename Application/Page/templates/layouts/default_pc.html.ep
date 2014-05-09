@@ -11,82 +11,102 @@
 	<script type="text/javascript" src="js/bookmark_bubble/bookmark_bubble.js"></script>
 	<script type="text/javascript" src="js/bookmark_bubble/example.js"></script>
 
-    <%= stylesheet '/css/bootstrap-smart.css'; %>
-    <%= stylesheet '/css/bootstrap-smart-theme.css'; %>
-    <%= stylesheet '/css/smart.css'; %>
-    <%= stylesheet '/css/glider-smart.css'; %>
+	<!--  stylesheet -->
+    <%= stylesheet '/css/bootstrap.css'; %>
+    <%= stylesheet '/css/demo.css'; %>
+    <%= stylesheet '/css/flat-ui.css'; %>
+	
+	<!--  javascript -->
     <%= javascript '/js/bootstrap.js'; %>
-    <%= javascript '/js/glider.js'; %>
+    <%= javascript '/js/bootstrap-select.js'; %>
+    <%= javascript '/js/bootstrap-switch.js'; %>
+    <%= javascript '/js/flatui-checkbox.js'; %>
+    <%= javascript '/js/flatui-radio.js'; %>
+    <%= javascript '/js/jquery-1.8.3.min.js'; %>
+    <%= javascript '/js/jquery-ui-1.10.3.custom.min.js'; %>
+    <%= javascript '/js/jquery.ui.touch-punch.min.js'; %>
+    <%= javascript '/js/jquery.tagsinput.js'; %>
+    <%= javascript '/js/jquery.placeholder.js'; %>
+    <%= javascript '/js/jquery.stacktable.js'; %>
     <%= javascript '/js/effects.js'; %>
     <%= javascript '/js/prototype.js'; %>
 
 </head>
 <body>
+    <div class="container">
 
-    <div class="container text-left">
-		<div class="page-header">
-			<h1><a href="/">ClubMania</a></h1>
-			<p>for those who seeks great night</p>
-			<p>hello!<%= $user_data->{user_name} %></p>
-		</div>
-	</div>
+      <div class="demo-headline">
+        <h1 class="demo-logo">
+          <div class="logo"></div>
+          ClubMania
+          <small>For All Party Rocker</small>
+        </h1>
+      </div> <!-- /demo-headline -->
 
 
-	<!-- header -->
-	<div class="navbar navbar-default">
-    <div class="container text-left">
+      <div class="row demo-tiles">
+        <div class="col-xs-4">
+          <div class="tile tile-hot">
+            <img src="images/icons/png/Gift-Box.png" alt="Compas" class="tile-image big-illustration">
+            <h3 class="tile-title">Get Coupon</h3><br>
+            <a class="btn btn-primary btn-large btn-block" href="/coupon/1">More detail</a>
+          </div>
+        </div>
 
-		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li><a href="/">Home</a></li>
-				<li><a href="/event/1">Event</a></li>
-				<li><a href="/club/1">Club</a></li>
-				<li><a href="/owner/1">DJ</a></li>
-				<li><a href="/coupon/1">Coupon</a></li>
-				<li><a href="/location/1">Map</a></li>
-				<li><a href="/login">Login</a></li>
-			</ul>
-		</div>
+        <div class="col-xs-4">
+          <div class="tile">
+            <img src="images/icons/png/Calendar.png" alt="Infinity-Loop" class="tile-image">
+            <h3 class="tile-title">Check Event</h3><br>
+            <!-- <p>Vector-based shapes and minimum of layer styles.</p> -->
+            <a class="btn btn-primary btn-large btn-block" href="/event/1">More detail</a>
+          </div>
+        </div>
 
-	</div>
-	</div>
+        <div class="col-xs-4">
+          <div class="tile tile-hot">
+            <img src="images/icons/png/Map.png" alt="Chat" class="tile-image">
+            <h3 class="tile-title">Seek club</h3><br>
+            <a class="btn btn-primary btn-large btn-block" href="/club/1">More detail</a>
+          </div>
 
-    <div class="container text-left">
+        </div>
+      </div> <!-- /tiles -->
+
+
 		<%= content %>
-    </div> <!--container end -->
+
+    </div> <!-- /Contaienr -->
 
 
-	<!-- paging -->
-		<ul class="pagination">
-			<a href=<%= $paging->{previous_url} %>>
-				<button type="button" class="btn btn-default btn-large">prev</button>
-			</a>
-			<a href=<%= $paging->{next_url} %>>
-				<button type="button" class="btn btn-default btn-large">next</button>
-			</a>
-		</ul>
-	<!-- paging end -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-7">
 
-	<!-- フッター -->
-	<div class="navbar navbar-default">
-    <div class="container text-left">
+            <h3 class="footer-title">ClubMania</h3>
+            <p>All right reserves</p>
 
-		<div class="navbar-header">
-			<!--<a class="navbar-brand" href="/">Home</a>-->
-		</div>
+          </div> <!-- /col-xs-7 -->
 
-		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<!-- <li><a href="/contact">Contact us</a></li> -->
-			</ul>
-			<ul class="nav navbar-nav pull-right">
-				<li><a href="/">Copyright 2013 ClubMania All Right Reserved</a></li>
-			</ul>
-		</div>
+          <div class="col-xs-5">
+            <div class="footer-banner">
+              <h3 class="footer-title">Have Fun!</h3>
+              <ul>
+                <li>Coutact us via email below</li>
+                <li>clubmania.information@gmail.com</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
 
-	</div>
-	</div>
-	<!-- フッター終わり -->
+
+
+
+
+
 
 </body>
 </html>

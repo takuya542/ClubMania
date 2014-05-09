@@ -131,6 +131,15 @@ under sub {
     return 1;
 };
 
+get '/landing' => sub {
+    my $self = shift;
+    my $paging = Logic::Paging->build_paging(+{ 
+        request => $self->req, 
+        param   => undef, 
+    });
+    ( $paging->is_sp ) ? $self->render('sp/landing') : $self->render('pc/landing')
+};
+
 
 # ホーム
 get '/:page' => { page => undef } => sub {
