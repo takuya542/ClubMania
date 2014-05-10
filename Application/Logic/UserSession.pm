@@ -129,7 +129,7 @@ sub _get_guest_user {
     my $user_data = bless +{
         session_seed        => undef,
         user_id             => undef,
-        user_name           => "Guest",
+        user_name           => "Guest User",
         is_first_landing    => undef,
         my_user_url         => "/login",
     },$class;
