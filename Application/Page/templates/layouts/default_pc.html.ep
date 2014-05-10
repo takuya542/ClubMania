@@ -79,6 +79,7 @@
 		<%= content %>
 
     </div> <!-- /Contaienr -->
+	</div>
 
 
     <footer>

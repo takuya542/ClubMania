@@ -162,7 +162,8 @@ get '/:page' => { page => undef } => sub {
     my $event_data = Logic::EventData->new($paging)->get_multi_event_data;
     $self->stash($event_data);
 
-    ( $paging->is_sp ) ? $self->render('sp/index') : $self->render('pc/index')
+    #( $paging->is_sp ) ? $self->render('sp/index') : $self->render('pc/index')
+    $self->render('pc/index');
 };
 
 
@@ -175,7 +176,8 @@ get '/event/:page' => { page => undef } => sub{
     });
     my $event_data  = Logic::EventData->new($paging)->get_multi_event_data;
     $self->stash($event_data);
-    ( $paging->is_sp ) ? $self->render('sp/event') : $self->render('pc/event')
+    #( $paging->is_sp ) ? $self->render('sp/event') : $self->render('pc/event')
+    $self->render('pc/event');
 };
 
 
@@ -188,7 +190,8 @@ get '/event/detail/:id' => sub{
     });
     my $event_data = Logic::EventData->new($paging)->get_single_event_data;
     $self->stash($event_data);
-    ( $paging->is_sp ) ? $self->render('sp/event_detail') : $self->render('pc/event_detail')
+    #( $paging->is_sp ) ? $self->render('sp/event_detail') : $self->render('pc/event_detail')
+    $self->render('pc/event_detail');
 };
 
 
