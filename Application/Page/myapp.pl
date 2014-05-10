@@ -49,7 +49,8 @@ post '/auth/exec' => sub{
 get '/login_before' => sub{
     my $self = shift;
     my $ua   = $self->req->headers->user_agent;
-    ( $ua =~/iPhone/ || $ua =~/Android/ ) ? $self->render('sp/login') : $self->render('pc/login');
+    #( $ua =~/iPhone/ || $ua =~/Android/ ) ? $self->render('sp/login') : $self->render('pc/login');
+    $self->render('pc/login');
 };
 
 # ログイン
