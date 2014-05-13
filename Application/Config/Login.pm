@@ -3,7 +3,7 @@ package Config::Login;
 use strict;
 
 sub LOGIN_NESESSARY {
-    [qw//]
+    [qw/ publish /]
 }
 
 sub get_login_nesessary_page {
