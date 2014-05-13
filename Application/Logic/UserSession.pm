@@ -91,22 +91,33 @@ sub set_and_get_user_session_seed {
         access_token_secret => $access_token_secret,
     });
 
-    #DB格納&シーケンスID発行
-    my $user_id = Model::UserSession->insert(+{
-        session_seed => $session_seed
-    });
+    unless ( _is_login_before($session_seed) ){
 
-    my $row = Model::UserTwitterData->insert(+{
-        user_id     => $user_id,
-        screen_id   => $user_id_twitter,
-        screen_name => $screen_name,
-        profile     => "test profile",
-        image       => "hoge.png",
-    });
+        #DB格納&シーケンスID発行
+        my $user_id = Model::UserSession->insert(+{
+            session_seed => $session_seed
+        });
+
+        my $row = Model::UserTwitterData->insert(+{
+            user_id     => $user_id,
+            screen_id   => $user_id_twitter,
+            screen_name => $screen_name,
+            profile     => "test profile",
+            image       => "hoge.png",
+        });
+
+    }
 
     return $session_seed;
 }
 
+sub _is_login_before {
+    my $session_seed = shift;
+    my $row = Model::UserSession->single(+{
+        session_seed => $session_seed
+    });
+    return ($row) ? 1 : undef;
+}
 
 #ユーザに保持させるsession_seedを生成
 sub _create_session_seed {

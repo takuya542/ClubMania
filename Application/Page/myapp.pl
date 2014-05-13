@@ -146,9 +146,8 @@ under sub {
         }
 
     }
-    $self->stash(+{ user_data => $user_data });   #参照 at template：user_data->{user_name};
-    $self->{USER} => $user_data;
-    $self->app->log->debug($self->{USER});
+    $self->stash(+{ USER => $user_data });   # 参照 at template：USER->{user_name};
+    $self->{USER} = $user_data;              # グローバルな感じにセット
     return 1;
 };
 
@@ -250,6 +249,7 @@ get 'coupon/detail/:id' => sub{
     ( $paging->is_sp ) ? $self->render('sp/coupon_detail') : $self->render('pc/coupon_detail')
 };
 
+
 # クーポン発行画面
 get 'coupon/publish/:id' => sub{
     my $self = shift;
@@ -257,15 +257,13 @@ get 'coupon/publish/:id' => sub{
         request => $self->req, 
         param   => $self->param('id'),
     });
-#    my $coupon_data = Logic::CouponData->new($paging)->get_single_coupon_data;
-#    $self->app->log->debug($self->{USER});
-
-=pop
+    #my $coupon_data = Logic::CouponData->new($paging)->get_single_coupon_data;
+    my $coupon_data = +{};
+    $self->app->log->debug(Dumper($self->{USER}));
     Logic::CouponData->publish_coupon(+{
-        user_data   => $self->stash("user_data");
+        user_id     => $self->{USER}->{user_id},
         coupon_data => $coupon_data, 
     });
-=cut
     $self->redirect_to("/");
 };
 

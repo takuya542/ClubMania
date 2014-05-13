@@ -40,7 +40,7 @@
           <div class="logo"></div>
           <a href="/">ClubMania</a>
           <small>For All Party Rocker</small><br>
-          <small>Welcome! <%= $user_data->{user_name} %></small>
+          <small>Welcome! <%= $USER->{user_name} %></small>
           <small><a href="/login_before">Login</a></small>
           <small><a href="/logout">Logout</a></small>
         </h1>

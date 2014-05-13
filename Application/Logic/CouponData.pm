@@ -87,4 +87,10 @@ sub get_multi_coupon_data {
     return $coupons_data;
 }
 
+
+sub publish_coupon {
+    my ($class,$args) = @_;
+    return 1;
+}
+
 1;
