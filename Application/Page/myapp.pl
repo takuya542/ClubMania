@@ -49,8 +49,7 @@ post '/auth/exec' => sub{
 get '/login_before' => sub{
     my $self = shift;
     my $ua   = $self->req->headers->user_agent;
-    #( $ua =~/iPhone/ || $ua =~/Android/ ) ? $self->render('sp/login') : $self->render('pc/login');
-    $self->render('pc/login');
+    ( $ua =~/iPhone/ || $ua =~/Android/ ) ? $self->render('sp/login') : $self->render('pc/login');
 };
 
 # ログイン
@@ -148,6 +147,8 @@ under sub {
 
     }
     $self->stash(+{ user_data => $user_data });   #参照 at template：user_data->{user_name};
+    $self->{USER} => $user_data;
+    $self->app->log->debug($self->{USER});
     return 1;
 };
 
@@ -159,12 +160,10 @@ get '/:page' => { page => undef } => sub {
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
-
-    my $event_data = Logic::EventData->new($paging)->get_multi_event_data;
-    $self->stash($event_data);
-
-    #( $paging->is_sp ) ? $self->render('sp/index') : $self->render('pc/index')
-    $self->render('pc/index');
+    my $event_data  = Logic::EventData->new($paging)->get_multi_event_data;
+    $self->stash(+{ event_data => $event_data });
+    $self->stash(+{ paging     => $paging });
+    ( $paging->is_sp ) ? $self->render('sp/index') : $self->render('pc/index')
 };
 
 
@@ -176,9 +175,9 @@ get '/event/:page' => { page => undef } => sub{
         param   => $self->param('page') || 1,
     });
     my $event_data  = Logic::EventData->new($paging)->get_multi_event_data;
-    $self->stash($event_data);
-    #( $paging->is_sp ) ? $self->render('sp/event') : $self->render('pc/event')
-    $self->render('pc/event');
+    $self->stash(+{ event_data => $event_data });
+    $self->stash(+{ paging     => $paging });
+    ( $paging->is_sp ) ? $self->render('sp/event') : $self->render('pc/event')
 };
 
 
@@ -190,9 +189,9 @@ get '/event/detail/:id' => sub{
         param   => $self->param('id'),
     });
     my $event_data = Logic::EventData->new($paging)->get_single_event_data;
-    $self->stash($event_data);
-    #( $paging->is_sp ) ? $self->render('sp/event_detail') : $self->render('pc/event_detail')
-    $self->render('pc/event_detail');
+    $self->stash(+{ event_data => $event_data });
+    $self->stash(+{ paging     => $paging });
+    ( $paging->is_sp ) ? $self->render('sp/event_detail') : $self->render('pc/event_detail')
 };
 
 
@@ -204,7 +203,8 @@ get 'club/:page' => { page => undef  } => sub{
         param   => $self->param('page') || 1,
     });
     my $club_data  = Logic::ClubData->new($paging)->get_multi_club_data;
-    $self->stash($club_data);
+    $self->stash(+{ club_data => $club_data });
+    $self->stash(+{ paging    => $paging });
     ( $paging->is_sp ) ? $self->render('sp/club') : $self->render('pc/club')
 };
 
@@ -217,7 +217,8 @@ get 'club/detail/:id' => sub{
         param   => $self->param('id'),
     });
     my $club_data = Logic::ClubData->new($paging)->get_single_club_data;
-    $self->stash($club_data);
+    $self->stash(+{ club_data => $club_data });
+    $self->stash(+{ paging    => $paging });
     ( $paging->is_sp ) ? $self->render('sp/club_detail') : $self->render('pc/club_detail')
 };
 
@@ -229,10 +230,10 @@ get 'coupon/:page' => { page => undef  } => sub{
         request => $self->req, 
         param   => $self->param('page') || 1,
     });
-    #my $coupon_data = Logic::CouponData->new($paging)->get_multi_coupon_data;
-    #$self->stash($coupon_data);
-    #( $paging->is_sp ) ? $self->render('sp/coupon') : $self->render('pc/coupon')
-    $self->redirect_to("/");
+    my $coupon_data = Logic::CouponData->new($paging)->get_multi_coupon_data;
+    $self->stash(+{ coupon_data => $coupon_data });
+    $self->stash(+{ paging     => $paging });
+    ( $paging->is_sp ) ? $self->render('sp/coupon') : $self->render('pc/coupon')
 };
 
 
@@ -243,9 +244,28 @@ get 'coupon/detail/:id' => sub{
         request => $self->req, 
         param   => $self->param('id'),
     });
-    #my $coupon_data = Logic::CouponData->new($paging)->get_single_coupon_data;
-    #$self->stash($coupon_data);
-    #( $paging->is_sp ) ? $self->render('sp/coupon_detail') : $self->render('pc/coupon_detail')
+    my $coupon_data = Logic::CouponData->new($paging)->get_single_coupon_data;
+    $self->stash(+{ coupon_data => $coupon_data });
+    $self->stash(+{ paging     => $paging });
+    ( $paging->is_sp ) ? $self->render('sp/coupon_detail') : $self->render('pc/coupon_detail')
+};
+
+# クーポン発行画面
+get 'coupon/publish/:id' => sub{
+    my $self = shift;
+    my $paging = Logic::Paging->build_paging(+{ 
+        request => $self->req, 
+        param   => $self->param('id'),
+    });
+#    my $coupon_data = Logic::CouponData->new($paging)->get_single_coupon_data;
+#    $self->app->log->debug($self->{USER});
+
+=pop
+    Logic::CouponData->publish_coupon(+{
+        user_data   => $self->stash("user_data");
+        coupon_data => $coupon_data, 
+    });
+=cut
     $self->redirect_to("/");
 };
 

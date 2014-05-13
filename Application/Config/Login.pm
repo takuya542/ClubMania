@@ -3,9 +3,7 @@ package Config::Login;
 use strict;
 
 sub LOGIN_NESESSARY {
-    [qw/
-    coupon
-    /]
+    [qw//]
 }
 
 sub get_login_nesessary_page {
