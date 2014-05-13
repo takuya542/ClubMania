@@ -1,1 +1,17 @@
 % layout 'default_pc';
+
+Coupon detail<br>
+<div class="title-detail">
+	<h1><strong>
+		<%= $coupon_data->{coupon_name}  %>
+		<p><%= $coupon_data->{detail}  %></p>
+
+		<a href="/coupon/publish/<%= $coupon_data->{coupon_id} %>">
+			<button type="button" class="btn btn-default btn-large">Get Coupon</button>
+		</a><br>
+
+	</strong></h1>
+</div>
+<br><hr><hr>
+
+<br><hr><hr>

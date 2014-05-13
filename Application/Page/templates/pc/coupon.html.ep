@@ -1,1 +1,31 @@
 % layout 'default_pc';
+
+% for my $coupon_data (@{$coupon_data}) {
+
+% if( $paging->{count} % 3 == 0 ){
+	<div class="row"> <!-- row start -->
+% }
+
+	<div class="col-sm4 col-md-4">
+	<div class="body_white">
+
+		<!-- image -->
+		<div class="alpha">
+			<a href="<%= $coupon_data->{url} %>"><img src=<%= $coupon_data->{image} %> alt=<%= $coupon_data->{coupon_name} %> width="250" height="200" class="img-respongive"></a>
+		</div>
+
+		<div class="caption">
+			<!-- title,genre,time -->
+			<h3><strong><%= link_to $coupon_data->{url} => begin %><%= $coupon_data->{coupon_name} %><% end %><br></strong></h3>
+		</div>
+
+	</div>
+	</div>
+% $paging->{count}++;
+
+% if( $paging->{count} % 3 == 0 || $paging->{count} == $paging->{data_num_per_page} ){
+	</div> <!-- row end -->
+	<br>
+% }
+
+% }

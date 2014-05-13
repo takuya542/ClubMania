@@ -33,7 +33,7 @@ sub get_single_coupon_data {
     my ($self) = shift;
 
     #クーポン情報取得
-    my $coupon_data     = Model::ClubData->single(+{ 
+    my $coupon_data     = Model::CouponData->single(+{ 
         coupon_id => $self->paging->param,
     });
 

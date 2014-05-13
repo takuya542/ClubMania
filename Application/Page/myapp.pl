@@ -244,6 +244,8 @@ get 'coupon/detail/:id' => sub{
         param   => $self->param('id'),
     });
     my $coupon_data = Logic::CouponData->new($paging)->get_single_coupon_data;
+$self->app->log->debug("fuck");
+$self->app->log->debug(Dumper($coupon_data));
     $self->stash(+{ coupon_data => $coupon_data });
     $self->stash(+{ paging     => $paging });
     ( $paging->is_sp ) ? $self->render('sp/coupon_detail') : $self->render('pc/coupon_detail')
